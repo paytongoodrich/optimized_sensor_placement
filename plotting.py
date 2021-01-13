@@ -1,3 +1,7 @@
+'''
+Function Definitions
+'''
+
 def plotDesigns(A,designs):#(fieldPixels,globaldesignMatrix)
     
     '''
@@ -13,12 +17,12 @@ def plotDesigns(A,designs):#(fieldPixels,globaldesignMatrix)
         thisDesign = globaldesignMatrix[n]
         x = thisDesign[0:-2:2]
         y = thisDesign[1:-1:2]
-        plt.scatter(fieldPixels[:,0], fieldPixels[:,1], marker = 's', label='Field Pixels')
+        plt.scatter(A[:,0], A[:,1], marker = 's', label='Field Pixels')
         plt.scatter(x, y, label='N = ' + str(n+1))
         plt.xlabel('x', color='#1C2833')
         plt.ylabel('y', color='#1C2833')
 
-def plotAll(A,designs):#(fieldPixels,globaldesignMatrix)
+def plotAll(A,designs,radius):#(fieldPixels,globaldesignMatrix,coverageRadius)
     
     '''
     Plots the sensor locations as circles with an effective radius 
@@ -36,14 +40,38 @@ def plotAll(A,designs):#(fieldPixels,globaldesignMatrix)
         y = thisDesign[1:-1:2]
         circles = []
         for i in range(len(x)):
-            newCircle = plt.Circle((x[i],y[i]), coverageRadius, color = colors[n], fill=False)
+            newCircle = plt.Circle((x[i],y[i]), radius, color = colors[n], fill=False)
             ax.add_artist(newCircle)
     fig.suptitle('Agricultural Field represented by 1m\u00b2 pixels')
     ax.legend()
     plt.xlabel('x', color='#1C2833')
     plt.ylabel('y', color='#1C2833')
+
+def plotthisDesign(A,designs,radius,N):#(fieldPixels,globaldesignMatrix,coverageRadius,designNumber)
         
-def printReport(N_0,designs):#(globaldesignMatrix)
+    '''
+    Plots the coordinates of where to place sensors 
+    over the field pixels for the N sensor design
+    '''
+    
+    plt.style.use('seaborn')
+    fig, ax = plt.subplots(figsize=(5, 5))
+    thisDesign = globaldesignMatrix[N-1]
+    x = thisDesign[0:-2:2]
+    y = thisDesign[1:-1:2]
+    plt.scatter(A[:,0], A[:,1], marker = 's', label='Field Pixels')
+    for i in range(len(x)):
+        newCircle = plt.Circle((x[i],y[i]), radius, fill=False)
+        ax.add_artist(newCircle)
+    plt.xlabel('x', color='#1C2833')
+    plt.ylabel('y', color='#1C2833')
+    
+def graphCoverage(N_0,designs):#(N_0,globaldesignMatrix)
+    
+    '''
+    Make a scatter plot that shows the percent field coverage achievable by varying the number of sensors used
+    '''
+    
     numberDesigns = len(designs)
     minSensors = N_0
     maxSensors = N_0 + numberDesigns - 1
@@ -62,7 +90,13 @@ def printReport(N_0,designs):#(globaldesignMatrix)
     ax.set_ylim([0, 1])
     plt.show()
     
-#Plotting & Reporting
-plotDesigns(fieldPixels,globaldesignMatrix)
-plotAll(fieldPixels,globaldesignMatrix)
-printReport(N_0,globaldesignMatrix)
+
+    
+'''
+Plotting & Reporting
+'''
+
+# plotDesigns(fieldPixels,globaldesignMatrix)
+# plotAll(fieldPixels,globaldesignMatrix,coverageRadius)
+# plotthisDesign(fieldPixels,globaldesignMatrix,coverageRadius,3)
+# graphCoverage(N_0,globaldesignMatrix)
