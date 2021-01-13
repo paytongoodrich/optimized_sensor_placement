@@ -196,8 +196,8 @@ def mutate_randomReset(designs,variables,b):#(designMatrix,geneticVariables,boun
         designMatrix[j,:] = designMatrix[j-P,:]
         coordinateSelect = random.randint(0,len(designMatrix[j,:])-1)
         if (coordinateSelect % 2) == 0: #if the selected mutation is a y-coordinate
-            permissibleRange = (b[2],b[3]) #permissible range is ymin:ymax
+            permissibleRange = (b[2],b[3]) #permissible mutation range is ymin:ymax
         else: #else if a x coordinate,
-            permissibleRange = (b[0],b[1]) #permissible range is xmin:xmax
+            permissibleRange = (b[0],b[1]) #permissible mutation range is xmin:xmax
         designMatrix[j,coordinateSelect] = random.randint(permissibleRange[0],permissibleRange[1])
     return designMatrix
