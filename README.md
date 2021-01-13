@@ -8,4 +8,4 @@ How to use these programs:
 3. Run 'plotting.py' to generate figures and visualize the sensor placement.
 Note: You do not need to run areaGenerator.py - it is included in the functions.py
 
-Samples of these outputs for 'Agricultural Field Example.jpg' are included for N = 1-10 sensors. The results are shown in plotDesigns.png and report.png.
+Samples of these outputs for 'Agricultural Field Example.jpg' are included for N = 1-8 sensors. The results are shown in sensorPlacement.png and Report.png.
