@@ -20,16 +20,16 @@ fieldPixels = rayTrace(agriculturalField,bounds)
 print('The area of the field is approximately ' + str(len(fieldPixels[:,0])) + ' meters squared')
 
 #Define Genetic Algorithm Variables
-population = 50 
+population = 20 
 parents = 5 #number of parent designs kept in each iteration
 children = 5 #number of children designs made & kept in each iteration
 geneticVariables = (population, parents, children)
 N_0 = 1 #Number of devices in the initial design
 
 #Define exit criteria for the genetic loop
-convergenceCheck = 10 #loops that can occur with the same fitness score before it is considered 'converged'
 maxLoops = 100 #how many loops that occur for a given N before the program stops because it is taking too long
-Nmax = 10
+convergenceCheck = 10 #loops that can occur with the same fitness score before it is considered 'converged'
+N_max = 5
 theoreticalBest = (N_0*np.pi*(coverageRadius**2))/len(fieldPixels[:,0])
 
 #Error Checks
@@ -54,7 +54,13 @@ Used for plotting how the genetic algorithm 'learns' and improves itself over ti
 Also used for determining when the algorithm converges on for a given 'N'
 '''
 bestFitness = np.zeros((maxLoops,1))
-    
+
+'''
+globalFitness
+'''
+
+globalFitness = np.zeros((maxLoops,N_max))
+
 #Initialize Genetic Algorithm Counters
 loopNumber = 0
 numberSensors = N_0
@@ -98,10 +104,11 @@ while(bestFitness[loopNumber] < 1):
         
         #store the best design for this N
         globaldesignMatrix.append(designMatrix[0,:])
+        globalFitness[:,numberSensors-1] = bestFitness[:,0]
         
         #Reset counters, the design matrix, and the scoring vector.
         numberSensors += 1
-        if numberSensors == Nmax+1: # +1 is because N is iterated at the end of the loop
+        if numberSensors == N_max+1: # +1 is because N is iterated at the end of the loop
             print('The max number of sensors has been reached')
             break
         print('Solving for ' + str(numberSensors) + ' sensors')
